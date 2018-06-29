@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url('user/login', view.userLogin),
     url('user/logout', view.userLogout),
-    url('user/create', view.userCreate),
+    url('user/resgiter', view.userCreate),
 ]

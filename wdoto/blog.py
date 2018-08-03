@@ -59,7 +59,7 @@ def blogDetails(request):
         id = request.GET['id']
         blog = Blog.objects.get(id=id)
         resp['content'] = model_to_dict(blog)
-        print(resp)
+       
     except:
         resp['code'] = 1
     finally:

@@ -17,10 +17,20 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from . import view
+from . import blog
 
-urlpatterns = [
+urlpatterns = {
     path('admin/', admin.site.urls),
     url('user/login', view.userLogin),
     url('user/logout', view.userLogout),
     url('user/resgiter', view.userCreate),
-]
+
+    url('blog/add', blog.blogAdd),
+    url('blog/del', blog.blogDelete),
+    url('blog/update', blog.blogUpdate),
+    url('blog/list', blog.blogList),
+    url('blog/details', blog.blogDetails),
+    url('blog/pageView', blog.blogPageView),
+    url('blog/favorite', blog.blogFavorite),
+
+}

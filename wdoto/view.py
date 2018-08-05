@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import json
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 
 
 def userLogin(request):
@@ -20,11 +22,12 @@ def userLogin(request):
         resp['code'] = 1
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
-
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def userLogout(request):
     resp = {'code': 0, 'msg': ''}
-    token = request.META.get("HTTP_AUTHORIZATION")
-    print("token == %s"  % token)
+    uer = request.user
+    print("user   %s" % uer.id)
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
 

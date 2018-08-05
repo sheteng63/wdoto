@@ -1,7 +1,9 @@
-from modleBean.models import Blog
+from modleBean.models import Blog, BlogView, BlogFavorite
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 import json
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 
 
 # post
@@ -22,10 +24,12 @@ def blogAdd(request):
         return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def blogDelete(request):
     resp = {'code': 0, 'msg': '0'}
     try:
-        id = request.GET['id']
+        id = request.POST['id']
         blog = Blog.objects.get(id=id)
         blog.delete()
     except:
@@ -59,33 +63,41 @@ def blogDetails(request):
         id = request.GET['id']
         blog = Blog.objects.get(id=id)
         resp['content'] = model_to_dict(blog)
-       
+
     except:
         resp['code'] = 1
     finally:
         return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def blogPageView(request):
     resp = {'code': 0, 'msg': '0'}
     try:
-        id = request.GET['id']
+        id = request.POST['id']
         blog = Blog.objects.get(id=id)
         blog.pageViews += 1
         blog.save()
+        blogView = BlogView(userId=request.user.id, blogId=id)
+        blogView.save()
     except:
         resp['code'] = 1
     finally:
         return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def blogFavorite(request):
     resp = {'code': 0, 'msg': '0'}
     try:
-        id = request.GET['id']
+        id = request.POST['id']
         blog = Blog.objects.get(id=id)
         blog.favorite += 1
         blog.save()
+        blogFav = BlogFavorite(userId=request.user.id, blogId=id)
+        blogFav.save()
     except:
         resp['code'] = 1
     finally:

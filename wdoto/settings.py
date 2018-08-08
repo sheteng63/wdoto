@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'wdoto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'wdoto.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'i.sqlite3'),
 
     }
 }
@@ -115,6 +115,9 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

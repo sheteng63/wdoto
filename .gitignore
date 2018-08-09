@@ -1,0 +1,4 @@
+/media
+/modleBean/migrations
+*.sqlite3
+.idea

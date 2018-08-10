@@ -4,9 +4,10 @@ import json
 
 # Create your models here.
 class Blog(models.Model):
+    userId = models.CharField(max_length=20)
     title = models.CharField(max_length=30)
     ltitle = models.CharField(max_length=30, null=True)
-    body = models.CharField(max_length=20000)
+    body = models.TextField()
     author = models.CharField(max_length=20, null=True)
     date = models.DateTimeField(auto_now_add=True)
     pageViews = models.IntegerField(null=True)
@@ -35,3 +36,12 @@ class AccountImage(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=20)
     image = models.ImageField(upload_to='upload/%Y/%m/%d')
+
+
+# 评论
+class BlogRemark(models.Model):
+    userId = models.CharField(max_length=20)
+    date = models.DateTimeField(auto_now_add=True)
+    remark = models.TextField()
+    blogId = models.CharField(max_length=20)
+    remarkId = models.CharField(max_length=20, null=True)

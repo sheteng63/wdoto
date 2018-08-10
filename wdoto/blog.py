@@ -41,11 +41,12 @@ def blogDelete(request):
 def blogUpdate(request):
     pass
 
-
 def blogList(request):
+    print("blogList")
     resp = {'code': 0, 'msg': '0'}
     try:
         blogs = Blog.objects.all()
+        print(blogs)
         bl = []
         for blog in blogs:
             bl.append(model_to_dict(blog))
@@ -55,6 +56,7 @@ def blogList(request):
         resp['code'] = 1
     finally:
         return HttpResponse(json.dumps(resp), content_type="application/json")
+
 
 
 def blogDetails(request):

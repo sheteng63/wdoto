@@ -4,7 +4,6 @@ import json
 
 # Create your models here.
 class Blog(models.Model):
-    userId = models.CharField(max_length=20)
     title = models.CharField(max_length=30)
     ltitle = models.CharField(max_length=30, null=True)
     body = models.TextField()

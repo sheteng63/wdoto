@@ -2,6 +2,4 @@
 /modleBean/migrations
 *.sqlite3
 /.idea
-
-
-
+start.py

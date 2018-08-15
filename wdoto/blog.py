@@ -13,25 +13,25 @@ from django.contrib.auth.models import User
 @permission_classes((IsAuthenticated,))
 def blogAdd(request):
     resp = {'code': 0, 'msg': '0'}
-# try:
-    title = request.POST["title"]
-    body = request.POST["body"]
-    authorId = request.user.id
-    pageViews = request.POST.get("pageViews")
-    favorite = request.POST.get("favorite")
-    if pageViews == None:
-        pageViews = 0
-    if favorite == None:
-        favorite = 0
-    blog = Blog(title=title, body=body, authorId=authorId, pageViews=pageViews, favorite=favorite)
-    blog.save()
-# except MultiValueDictKeyError:
-    resp['code'] = 2
-    resp['msg'] = '参数缺失'
-# except:
-    resp['code'] = 1
-# finally:
-    return HttpResponse(json.dumps(resp), content_type="application/json")
+    try:
+        title = request.POST["title"]
+        body = request.POST["body"]
+        authorId = request.user.id
+        pageViews = request.POST.get("pageViews")
+        favorite = request.POST.get("favorite")
+        if pageViews == None:
+            pageViews = 0
+        if favorite == None:
+            favorite = 0
+        blog = Blog(title=title, body=body, authorId=authorId, pageViews=pageViews, favorite=favorite)
+        blog.save()
+    except MultiValueDictKeyError:
+        resp['code'] = 2
+        resp['msg'] = '参数缺失'
+    except:
+        resp['code'] = 1
+    finally:
+        return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
 @api_view(['POST'])
@@ -67,27 +67,28 @@ def blogUpdate(request):
 def blogList(request):
     print("blogList")
     resp = {'code': 0, 'msg': '0'}
-# try:
-    blogs = Blog.objects.all().order_by("-id")
-    print(blogs)
-    bl = []
-    for blog in blogs:
-        blogRes = model_to_dict(blog)
-        blogRes['date'] = str(blog.date.strftime("%m-%d %H:%I"))
-        user = User.objects.get(id=blog.authorId)
-        blogRes['authorName'] = user.username
-        AccImg = AccountImage.objects.filter(userId=blog.authorId).order_by("-id")
-        blogRes['authorImg'] = str(AccImg[0].image)
-        bl.append(blogRes)
-    resp['content'] = bl
-    print(resp)
-# except MultiValueDictKeyError:
-#     resp['code'] = 2
-#     resp['msg'] = '参数缺失'
-# except:
-#     resp['code'] = 1
-# finally:
-    return HttpResponse(json.dumps(resp), content_type="application/json")
+    try:
+        blogs = Blog.objects.all().order_by("-id")
+        print(blogs)
+        bl = []
+        for blog in blogs:
+            blogRes = model_to_dict(blog)
+            blogRes['date'] = str(blog.date.strftime("%m-%d %H:%I"))
+            user = User.objects.get(id=blog.authorId)
+            blogRes['authorName'] = user.username
+            AccImg = AccountImage.objects.filter(userId=blog.authorId).order_by("-id")
+            blogRes['authorImg'] = str(AccImg[0].image)
+            bl.append(blogRes)
+        resp['content'] = bl
+        print(resp)
+    except MultiValueDictKeyError:
+        resp['code'] = 2
+        resp['msg'] = '参数缺失'
+    except:
+        resp['code'] = 1
+    finally:
+        return HttpResponse(json.dumps(resp), content_type="application/json")
+
 
 def blogDetails(request):
     resp = {'code': 0, 'msg': '0'}

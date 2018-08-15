@@ -26,7 +26,7 @@ def blogAdd(request):
         blog = Blog(title=title, body=body, authorId=authorId, pageViews=pageViews, favorite=favorite)
         blog.save()
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1
@@ -52,7 +52,7 @@ def blogDelete(request):
         else:
             blog.delete()
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1
@@ -82,7 +82,7 @@ def blogList(request):
         resp['content'] = bl
         print(resp)
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1
@@ -97,7 +97,7 @@ def blogDetails(request):
         blog = Blog.objects.get(id=id)
         resp['content'] = model_to_dict(blog)
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1
@@ -117,7 +117,7 @@ def blogPageView(request):
         blogView = BlogView(userId=request.user.id, blogId=id)
         blogView.save()
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1
@@ -137,7 +137,7 @@ def blogFavorite(request):
         blogFav = BlogFavorite(userId=request.user.id, blogId=id)
         blogFav.save()
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1
@@ -158,7 +158,7 @@ def blogRemark(request):
         blogRemark = BlogRemark(userId=userId, blogId=blogId, remark=remark, remarkId=remarkId)
         blogRemark.save()
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1
@@ -179,7 +179,7 @@ def blogRemarkDel(request):
         blogRemark = BlogRemark.objects.get(userId=userId, id=remarkId, blogId=blogId)
         blogRemark.save()
     except MultiValueDictKeyError:
-        resp['code'] = 1
+        resp['code'] = 2
         resp['msg'] = '参数缺失'
     except:
         resp['code'] = 1

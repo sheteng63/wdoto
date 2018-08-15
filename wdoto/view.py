@@ -111,7 +111,7 @@ def getUserInfo(request):
         data['name'] = request.user.username
         resp['data'] = data
     except:
-        resp['code'] = 1
+        resp['code'] = 1                 
     finally:
         print(resp)
         return HttpResponse(json.dumps(resp), content_type="application/json")

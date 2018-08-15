@@ -37,6 +37,8 @@ urlpatterns = [
     url('blog/details', blog.blogDetails),
     url('blog/pageView', blog.blogPageView),
     url('blog/favorite', blog.blogFavorite),
+    url('blog/remark', blog.blogRemark),
+    url('blog/remarkDel', blog.blogRemarkDel),
 
     url(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
 ]
